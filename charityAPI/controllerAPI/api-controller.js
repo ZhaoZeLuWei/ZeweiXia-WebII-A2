@@ -39,6 +39,61 @@ router.get('/events', function (req, res) {
     })
 })
 
+//API for search
+router.get('/searchEvent', function (req, res) {
+    const { date, category, location, name } = req.query;
+    let q = `
+        SELECT
+            e.EventID,
+            e.EventName,
+            e.EventDate,
+            c.CategoryName,
+            o.OrgName,
+            l.LocationName,
+            e.ImageURL
+        FROM Event e
+            JOIN Category c ON e.CategoryID = c.CategoryID
+            JOIN Organisation o ON e.OrgID = o.OrgID
+            JOIN Location l ON l.LocationID = o.LocationID
+    `;
+
+    //addition selection to query
+    let conditions = [];
+    let params = [];
+
+    if(date && date.trim() !== ''){
+        conditions.push("DATE(e.EventDate) = ?");
+        params.push(date);
+    }
+    if(category && category.trim() !== ''){
+        conditions.push("c.CategoryName LIKE ?");
+        params.push("%" + category + "%");
+    }
+    if(location && location.trim() !== ''){
+        conditions.push("LOWER(l.LocationName) LIKE LOWER(?)");
+        params.push("%" + location + "%");
+    }
+    if(name && name.trim() !== ''){
+        conditions.push("e.EventName LIKE ?");
+        params.push("%" + name + "%");
+    }
+
+    if(conditions.length > 0){
+        q += " WHERE " + conditions.join(" AND ");
+    }
+    console.log(q);
+    console.log(params);
+    console.log(conditions);
+
+    connection.query(q, params,function(err, records,rows) {
+        if (err) {
+            console.error(err);
+        }else {
+            res.send(records);
+        }
+    });
+});
+
 //GET: url into the specific event id, then send all information about that event
 router.get('/events/:id', function (req, res) {
     const eventId = req.params.id;
@@ -83,15 +138,5 @@ router.get('/events/:id', function (req, res) {
      }
  })
 })
-
-//Get specific date
-
-//Get specific category
-
-//Get specific location
-
-//Get specific Name
-
-
 //Export API routers
 module.exports = router;

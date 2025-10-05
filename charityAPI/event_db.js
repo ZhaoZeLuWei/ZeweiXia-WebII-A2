@@ -16,6 +16,7 @@ module.exports = {
             user: event_db.user,
             password: event_db.password,
             database: event_db.database,
+            dateStrings: true,
         })
     }
 }

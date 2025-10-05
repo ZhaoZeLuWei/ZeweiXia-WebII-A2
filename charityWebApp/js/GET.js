@@ -7,9 +7,11 @@ function createEventElement(event) {
     link.className = 'btn';
     link.innerHTML = `Event Details`;
 
-    //Better present the date information
+    //Better present the date information BUG
+    // const date = new Date(event.EventDate);
+    // const formatted = date.toLocaleString();
     const date = new Date(event.EventDate);
-    const formatted = date.toLocaleString();
+    const formatted = date.toISOString().slice(0, 19).replace('T', ' ');
 
 
     //build div for each event
@@ -137,9 +139,11 @@ function domEventDetails(event) {
     const goalDiv = document.getElementById('goal');
     goalDiv.innerHTML = event.Goal + " $";
 
-    //date and time
+    //date and time <BUG fixed>
     const timeDiv = document.getElementById('time');
-    timeDiv.innerHTML = Date(event.EventDate);
+    const date = new Date(event.EventDate);
+    timeDiv.innerHTML = date.toISOString().slice(0,19).replace('T',' ');
+
 
     //location
     const locationDiv = document.getElementById('locationName');
@@ -225,3 +229,11 @@ function warning() {
     alert( "This feature is currently under construction.");
 }
 
+//wait api finished
+function search(){
+    fetch('')
+        .then(res => res.json())
+        .then(data => {
+            console.log("Search results:", data);
+        });
+}
