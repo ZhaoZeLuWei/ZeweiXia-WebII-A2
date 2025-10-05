@@ -13,15 +13,18 @@ var router = express.Router();
 
 //GET: home page, only show brief information, not all
 router.get('/events', function (req, res) {
-    q = ` SELECT 
+    q = ` SELECT
+        e.EventID,
         e.EventName, 
         e.EventDate, 
         c.CategoryName, 
         o.OrgName,
+        l.LocationName,
         e.ImageURL
       FROM Event e
       JOIN Category c ON e.CategoryID = c.CategoryID
       JOIN Organisation o ON e.OrgID = o.OrgID
+      JOIN Location l ON l.LocationID = o.LocationID
       ORDER BY e.EventDate ASC
     `;
     connection.query(q, function(err, records,rows) {
