@@ -3,6 +3,7 @@
 <head>
     <title>Bob Charity Site</title>
     <link rel="stylesheet" href="../css/design.css">
+    <link rel="stylesheet" href="../css/eventInfo.css">
 </head>
 <body onload="getEventInfo()">
 <br>
@@ -14,8 +15,33 @@
     </nav>
 </header>
 
-<div class="detail">
 
+<div class="event-info">
+    <div id="image" class="event-image">
+    </div>
+    <div id="information" class="event-content">
+        <div class="event-info">
+            <h1 id="eventName"></h1>
+            <h3>Goal: </h3>
+            <p id="goal"></p>
+            <h3>Date and time</h3>
+            <p id="time"></p>
+            <h3>Location</h3>
+            <p id="locationName">name</p>
+            <p id="street">street</p>
+            <p id="venue">venue</p>
+            <h3>About this event</h3>
+            <p id="about">details</p>
+            <h3>Organisation Details</h3>
+            <strong><p id="orgName">></p></strong>
+            <p id="email"></p>
+            <p id="phone"></p>
+            <p id="orgLocation"></p>
+        </div>
+        <div id="tickets" class="event-tickets">
+
+        </div>
+    </div>
 </div>
 
 <p>Copyright &copy; 2025 Bob Charity. All Rights Reserved.</p>
