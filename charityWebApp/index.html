@@ -2,20 +2,32 @@
 <html>
 <head>
     <title>Bob Charity Site</title>
+    <link rel="stylesheet" href="css/design.css">
 </head>
 <body onload="getEvents()">
 <br>
-<h1>Bob Charity Site</h1>
-
-<a href="/"><span>Concerts</span></a> | <a href="/concert"><span>Concerts</span></a>  | <a href="/add_concert"><span>Add a new concert</span></a>
-<a href="/update_concert"><span>Update location by ID</span></a>
+<header class="navbar">
+    <div class="logo">Bob Charity Site</div>
+    <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="/html/search.html">Search</a>
+    </nav>
+</header>
 <br>
+<h1>Welcome to Bob Charity Site</h1>
+<h3>Our mission: Save the world with code!</h3>
+
 <!--show the response of API GET call
 To allow users to navigate between pagess-->
-<div id="events" >
 
+
+<div id="upcoming">
+    <h2>Upcoming Events</h2>
 </div>
-
+<div id="past">
+    <h2>Upcoming Events</h2>
+</div>
+<div id="events" ></div>
 </body>
 <script src="./js/GET.js">
 

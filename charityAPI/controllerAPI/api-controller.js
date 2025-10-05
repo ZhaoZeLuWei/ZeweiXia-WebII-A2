@@ -25,6 +25,7 @@ router.get('/events', function (req, res) {
       JOIN Category c ON e.CategoryID = c.CategoryID
       JOIN Organisation o ON e.OrgID = o.OrgID
       JOIN Location l ON l.LocationID = o.LocationID
+      WHERE e.Status != 'suspended'
       ORDER BY e.EventDate ASC
     `;
     connection.query(q, function(err, records,rows) {
