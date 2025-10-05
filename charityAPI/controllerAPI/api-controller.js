@@ -40,23 +40,37 @@ router.get('/events', function (req, res) {
 })
 
 //GET: url into the specific event id, then send all information about that event
+
 router.get('/events/:id', function (req, res) {
- q = `
- SELECT 
-            e.EventID, 
-            e.EventName, 
-            e.EventDate, 
-            e.Description, 
+    const eventId = req.params.id;
+    q = `
+        SELECT
+            e.EventID,
+            e.EventName,
+            e.EventDate,
+            e.Description,
             e.ImageURL,
-            e.LocationDetails,
+            e.Goal,
+            e.Status,
             l.LocationName,
-            c.CategoryName
+            l.StreetAddress,
+            l.VenueDetails,
+            c.CategoryName,
+            o.OrgName,
+            o.Email,
+            o.PhoneNumber,
+            -- put all ticket information into one array
+            -- data format : ticketname: price: quantity
+            GROUP_CONCAT(CONCAT(t.TicketName, ':', t.Price, ':', t.Quantity) SEPARATOR '|') AS Tickets
         FROM Event e
-        JOIN Location l ON e.LocationID = l.LocationID
-        JOIN Category c ON e.CategoryID = c.CategoryID
+                 JOIN Location l ON e.LocationID = l.LocationID
+                 JOIN Category c ON e.CategoryID = c.CategoryID
+                 JOIN Organisation o ON e.OrgID = o.OrgID
+                 LEFT JOIN Ticket t ON e.EventID = t.EventID
         WHERE e.EventID = ?
+        GROUP BY e.EventID
  `;
- connection.query(q, function(err, records,rows) {
+ connection.query(q, [eventId], function(err, records,rows) {
 
      if (err) {
          console.error(err);

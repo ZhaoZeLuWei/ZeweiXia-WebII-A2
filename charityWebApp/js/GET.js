@@ -96,3 +96,23 @@ function getEvents() {
             document.getElementById('events').innerHTML = 'Failed to fetch events';
         });
 }
+
+function getEventInfo() {
+
+    const pathParts = window.location.pathname.split('/');
+    const eventId = pathParts[pathParts.length - 1];
+    console.log(eventId);
+    if (!eventId) {
+        console.error('No event ID in URL');
+        return;
+    }
+
+    fetch(`http://localhost:3060/api/events/${eventId}`)
+        .then(res => res.json())
+        .then(event => {
+            console.log(event);
+        })
+    .catch(err => {
+        console.log(err);
+    })
+}
