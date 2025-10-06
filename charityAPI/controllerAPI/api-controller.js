@@ -41,7 +41,7 @@ router.get('/events', function (req, res) {
 
 //API for search
 router.get('/searchEvent', function (req, res) {
-    const { date, category, location, name } = req.query;
+    const { date, category, location} = req.query;
     let q = `
         SELECT
             e.EventID,
@@ -72,10 +72,6 @@ router.get('/searchEvent', function (req, res) {
     if(location && location.trim() !== ''){
         conditions.push("LOWER(l.LocationName) LIKE LOWER(?)");
         params.push("%" + location + "%");
-    }
-    if(name && name.trim() !== ''){
-        conditions.push("e.EventName LIKE ?");
-        params.push("%" + name + "%");
     }
 
     if(conditions.length > 0){
