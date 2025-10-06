@@ -18,6 +18,9 @@
     font-weight: bold;
     color: #0D47A1;
     margin-right: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 #searchForm select,

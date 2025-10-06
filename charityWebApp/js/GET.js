@@ -1,3 +1,4 @@
+//create the event introduction div in home page
 function createEventElement(event) {
     console.log(event);
 
@@ -28,6 +29,7 @@ function createEventElement(event) {
     return classEvent;
 }
 
+//fetch all events for home page
 function getEvents() {
     fetch('http://localhost:3060/api/events')
         .then(res => res.json())
@@ -67,10 +69,10 @@ function getEvents() {
             pastEvent.sort((a, b) => new Date(b.EventDate) - new Date(a.EventDate));
 
 
-
+            //put upcoming events in upcoming div
             if (upcomingEvent.length > 0) {
                 const upcomingTitle = document.createElement('h2');
-                upcomingTitle.innerHTML = `Upcoming Events`;
+                upcomingTitle.innerHTML = `<img src="../images/UpComing.svg" alt="time" width="24" height="24"> Upcoming Events`;
                 upcoming.appendChild(upcomingTitle);
                 upcomingEvent.forEach(event => {
                     upcoming.appendChild(createEventElement(event));
@@ -79,11 +81,10 @@ function getEvents() {
                 upcoming.innerHTML = 'No upcoming events';
             }
 
-
-
+            //put past events in past div
             if (pastEvent.length > 0) {
                 const pastTitle = document.createElement('h2');
-                pastTitle.innerHTML = `Past Events`;
+                pastTitle.innerHTML = `<img src="../images/pass.svg" alt="time" width="24" height="24"> Past Events`;
                 past.appendChild(pastTitle);
                 pastEvent.forEach(event => {
                     past.appendChild(createEventElement(event));
@@ -94,14 +95,16 @@ function getEvents() {
 
         })
         .catch(err => {
+            //if connection failed, tell user failed to fetch
             console.log(err);
             document.getElementById('upcoming').innerHTML = 'Failed to fetch events';
             document.getElementById('past').innerHTML = `${err}`;
         });
 }
 
+//Get all details about one event
 function getEventInfo() {
-
+    //get the id of that event
     const pathParts = window.location.pathname.split('/');
     const eventId = pathParts[pathParts.length - 1];
     console.log(eventId);
@@ -109,7 +112,7 @@ function getEventInfo() {
         console.error('No event ID in URL');
         return;
     }
-
+    //get all details about that event use API
     fetch(`http://localhost:3060/api/events/${eventId}`)
         .then(res => res.json())
         .then(event => {
@@ -124,6 +127,7 @@ function getEventInfo() {
     })
 }
 
+//show all details about that event with DOM
 function domEventDetails(event) {
     //image
     const imgDiv = document.getElementById('image');
@@ -168,6 +172,7 @@ function domEventDetails(event) {
     detailDiv.innerHTML = event.Description;
 }
 
+//show all organisation details followed by event details (DOM)
 function domOrgDetails(event) {
     //Present By (organisation name)
     const orgNameDiv = document.getElementById('orgName');
@@ -192,7 +197,7 @@ function domOrgDetails(event) {
     orgLocationDiv.innerHTML = locationInfo;
 }
 
-
+//show all ticket details followed by event details (DOM)
 function domTickets(event) {
     const tickets = event.Tickets;
     console.log(tickets);
@@ -225,12 +230,12 @@ function domTickets(event) {
     })
 }
 
-//for register btn
+//for register btn, show alert the feature is constructing
 function warning() {
     alert( "This feature is currently under construction.");
 }
 
-//search API
+//use search API to fetch the specific events
 function search(searchQuery){
     fetch(`http://localhost:3060/api/searchEvent?${searchQuery}`)
         .then(res => res.json())
@@ -267,7 +272,7 @@ function search(searchQuery){
     });
 }
 
-//get search query
+//get search query from user input
 function clickSearch() {
     const form = document.getElementById('searchForm');
     const formData = new FormData(form);
