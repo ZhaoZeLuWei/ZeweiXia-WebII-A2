@@ -1,0 +1,45 @@
+/* 搜索表单横排 */
+#searchForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;             /* 控件之间的间距 */
+    background: #FFFFFF;   /* 白色卡片 */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 0 auto 20px auto;
+    flex-wrap: wrap;       /* 窄屏时自动换行 */
+    max-width: 1200px;
+}
+
+/* label 和 input/select 并排 */
+#searchForm label {
+    font-weight: bold;
+    color: #0D47A1;
+    margin-right: 5px;
+}
+
+#searchForm select,
+#searchForm input[type="date"] {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* 按钮 */
+#searchForm button {
+    background-color: #1E90FF;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#searchForm button:hover {
+    background-color: #0D47A1;
+}

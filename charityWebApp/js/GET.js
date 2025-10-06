@@ -95,7 +95,8 @@ function getEvents() {
         })
         .catch(err => {
             console.log(err);
-            document.getElementById('events').innerHTML = 'Failed to fetch events';
+            document.getElementById('upcoming').innerHTML = 'Failed to fetch events';
+            document.getElementById('past').innerHTML = `${err}`;
         });
 }
 
@@ -229,11 +230,56 @@ function warning() {
     alert( "This feature is currently under construction.");
 }
 
-//wait api finished
-function search(){
-    fetch('')
+//search API
+function search(searchQuery){
+    fetch(`http://localhost:3060/api/searchEvent?${searchQuery}`)
         .then(res => res.json())
         .then(data => {
-            console.log("Search results:", data);
-        });
+            console.log(data);
+            const resultDiv = document.getElementById('upcoming');
+            resultDiv.innerHTML = '';
+            // const formatted = date.toLocaleString();
+            if (data.length > 0) {
+                data.forEach(event => {
+                    //date formatted
+                    const date = new Date(event.EventDate);
+                    const formatted = date.toISOString().slice(0, 19).replace('T', ' ');
+                    //create div element
+                    const eventDiv = document.createElement('div');
+                    eventDiv.className = "event";
+                    eventDiv.innerHTML = `
+                <img src="${event.ImageURL}" alt="${event.EventName}" width="200"><br>
+                <h3>${event.EventName}</h3>
+                <time datetime="${event.EventDate}">${formatted}</time>
+                <p>${event.LocationName}</p>
+                <p>A <strong><em>${event.CategoryName}</em></strong> Presented by <strong><em>${event.OrgName}</em></strong></p>
+                <a href="/${event.EventID}" class="btn">Event Details</a>
+                `;
+                    resultDiv.appendChild(eventDiv);
+                })
+            }else {
+                    resultDiv.innerHTML = `<h2>No events found</h2>`;
+                    console.log(data);
+            }
+        }).catch(err => {
+        console.log(err);
+        document.getElementById('upcoming').innerHTML = `Failed to fetch events! <br>${err}`;
+    });
 }
+
+//get search query
+function clickSearch() {
+    const form = document.getElementById('searchForm');
+    const formData = new FormData(form);
+
+    const params = new URLSearchParams(formData).toString();
+    for( const [key, value ] of Object.entries(form)) {
+        if (typeof value === "string" && value.trim() !== '') {
+            params.append(key, value);
+        }
+    }
+    const queryString = params.toString();
+    console.log(queryString);
+    search(queryString);
+}
+

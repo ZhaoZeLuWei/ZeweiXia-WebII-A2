@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Bob Charity Site</title>
     <link rel="stylesheet" href="../css/design.css">
+    <link rel="stylesheet" href="../css/searchForm.css">
 </head>
 <body>
 <br>
@@ -10,26 +11,51 @@
     <div class="logo">Bob Charity Site</div>
     <nav class="nav-links">
         <a href="/">Home</a>
-        <a href="/search.html">Search</a>
+        <a href="search.html">Search</a>
     </nav>
 </header>
 <br>
 <h1>Search events</h1>
-<button onclick="search()">Go</button>
-<!--show the response of API GET call
-To allow users to navigate between pagess-->
+<form id="searchForm">
+    <!-- Category -->
+    <label for="category">Category:</label>
+    <select id="category" name="category">
+        <option value="">-- Select Category --</option>
+        <option value="Charity Run">Charity Run</option>
+        <option value="Gala Dinner">Gala Dinner</option>
+        <option value="Silent Auction">Silent Auction</option>
+        <option value="Concert">Concert</option>
+    </select>
+    <br><br>
 
+    <!-- Location -->
+    <label for="location">Location:</label>
+    <select id="location" name="location">
+        <option value="">-- Select Location --</option>
+        <option value="Civic Center">Civic Center</option>
+        <option value="City Convention Center">City Convention Center</option>
+        <option value="People's Square">People's Square</option>
+        <option value="City Stadium">City Stadium</option>
+    </select>
+    <br><br>
 
-<div id="upcoming">
-    <h2>Upcoming Events</h2>
+    <!-- Date -->
+    <label for="eventDate">Date:</label>
+    <input type="date" id="eventDate" name="date">
+    <br><br>
+
+    <button type="button" onclick="clickSearch()">Search</button>
+    <button type="button" id="clearBtn">Clear Filters</button>
+</form>
+<div id="resDiv">
+    <h2>Search Results</h2>
+    <div id="upcoming">
+    </div>
 </div>
-<div id="past">
-    <h2>Upcoming Events</h2>
-</div>
+
 <p>Copyright &copy; 2025 Bob Charity. All Rights Reserved.</p>
 <p>Email: z.xia.12@scu.edu.au.com | Student ID: 24517199 </p>
 
 </body>
-<script src="../js/GET.js">
-
-</script>
+<script src="../js/GET.js"></script>
+<script src="../js/DOM.js"></script>
